@@ -1,0 +1,15 @@
+ if (id == null)
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
+
+            var list = from a in db.coursedetails
+                       join p in db.courses on
+                           a.course_courseid equals p.courseid
+                       join q in db.videolinks on p.videolink_videoid equals q.videoid
+                       select new { coursename= p.coursename,
+                        videolink = q.vlink,
+                         aboutcourse=p.aboutcourse,
+                        agegroup = p.agegroup,
+                         hour=p.durationhr,fees=p.fees,
+                         date=a.batchdate,batches=a.batchname,
+                         timings=a.batchtimings,finalpresentation=a.batchfinaldate};
+            return list;
